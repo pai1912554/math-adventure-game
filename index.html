@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมผจญภัยคณิตศาสตร์</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- หน้าจอเริ่มต้น -->
+        <div id="start-screen" class="screen active">
+            <div class="stars-bg"></div>
+            <div class="start-content">
+                <h1 class="game-title">
+                    <span class="title-icon">&#x1F9EE;</span>
+                    เกมผจญภัยคณิตศาสตร์
+                    <span class="title-icon">&#x2728;</span>
+                </h1>
+                <p class="subtitle">เสริมทักษะการคำนวณพื้นฐาน</p>
+                <div class="character-preview">
+                    <div class="hero-sprite idle"></div>
+                </div>
+                <div class="start-buttons">
+                    <button id="btn-start" class="btn btn-primary btn-large" onclick="showCharacterSelect()">
+                        &#x1F3AE; เริ่มผจญภัย
+                    </button>
+                    <button id="btn-howto" class="btn btn-secondary" onclick="showHowTo()">
+                        &#x1F4D6; วิธีเล่น
+                    </button>
+                    <button id="btn-scores" class="btn btn-secondary" onclick="showHighScores()">
+                        &#x1F3C6; คะแนนสูงสุด
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- วิธีเล่น -->
+        <div id="howto-screen" class="screen">
+            <div class="panel">
+                <h2>&#x1F4D6; วิธีเล่น</h2>
+                <div class="howto-content">
+                    <div class="howto-item">
+                        <span class="howto-icon">&#x1F4AF;</span>
+                        <div>
+                            <h3>ตอบโจทย์คณิตศาสตร์</h3>
+                            <p>แก้โจทย์คำนวณให้ถูกต้องเพื่อเอาชนะศัตรูและผ่านด่าน</p>
+                        </div>
+                    </div>
+                    <div class="howto-item">
+                        <span class="howto-icon">&#x2764;&#xFE0F;</span>
+                        <div>
+                            <h3>พลังชีวิต</h3>
+                            <p>คุณมี 3 หัวใจ ตอบผิดจะเสียหัวใจ 1 ดวง หมดหัวใจ = Game Over</p>
+                        </div>
+                    </div>
+                    <div class="howto-item">
+                        <span class="howto-icon">&#x23F1;&#xFE0F;</span>
+                        <div>
+                            <h3>เวลาจำกัด</h3>
+                            <p>แต่ละข้อมีเวลาจำกัด ตอบเร็วได้คะแนนโบนัส!</p>
+                        </div>
+                    </div>
+                    <div class="howto-item">
+                        <span class="howto-icon">&#x2B50;</span>
+                        <div>
+                            <h3>ดาวสะสม</h3>
+                            <p>ตอบถูกติดต่อกันจะได้ดาวพิเศษ สะสมเพื่อปลดล็อคด่านใหม่</p>
+                        </div>
+                    </div>
+                    <div class="howto-item">
+                        <span class="howto-icon">&#x1F30D;</span>
+                        <div>
+                            <h3>5 ดินแดน</h3>
+                            <p>ผจญภัยผ่าน 5 ดินแดนที่ยากขึ้นเรื่อยๆ ตั้งแต่บวกลบจนถึงโจทย์ปัญหา</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('start-screen')">&#x2B05;&#xFE0F; กลับ</button>
+            </div>
+        </div>
+
+        <!-- เลือกตัวละคร -->
+        <div id="character-screen" class="screen">
+            <div class="panel">
+                <h2>&#x1F9D9; เลือกตัวละครของคุณ</h2>
+                <div class="character-grid">
+                    <div class="character-card" onclick="selectCharacter('knight')">
+                        <div class="char-avatar knight-avatar">&#x1F9D1;&#x200D;&#x1F3A4;</div>
+                        <h3>อัศวินตัวเลข</h3>
+                        <p>แข็งแกร่ง +1 หัวใจ</p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('wizard')">
+                        <div class="char-avatar wizard-avatar">&#x1F9D9;</div>
+                        <h3>จอมเวทคำนวณ</h3>
+                        <p>เวลาเพิ่ม +5 วินาที</p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('ninja')">
+                        <div class="char-avatar ninja-avatar">&#x1F977;</div>
+                        <h3>นินจาสูตรคูณ</h3>
+                        <p>คะแนนโบนัส x1.5</p>
+                    </div>
+                    <div class="character-card" onclick="selectCharacter('fairy')">
+                        <div class="char-avatar fairy-avatar">&#x1F9DA;</div>
+                        <h3>นางฟ้าเลขมหัศจรรย์</h3>
+                        <p>คำใบ้ฟรี 3 ครั้ง</p>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="showScreen('start-screen')">&#x2B05;&#xFE0F; กลับ</button>
+            </div>
+        </div>
+
+        <!-- แผนที่ด่าน -->
+        <div id="map-screen" class="screen">
+            <div class="map-container">
+                <h2 class="map-title">&#x1F5FA;&#xFE0F; แผนที่ผจญภัย</h2>
+                <div class="player-stats-bar">
+                    <div class="stat">&#x2B50; <span id="map-stars">0</span></div>
+                    <div class="stat">&#x1F4AF; <span id="map-score">0</span></div>
+                    <div class="stat" id="map-character"></div>
+                </div>
+                <div class="map-path">
+                    <div class="map-node" id="world-1" onclick="enterWorld(1)">
+                        <div class="node-icon">&#x1F333;</div>
+                        <div class="node-label">ป่าบวกลบ</div>
+                        <div class="node-stars"><span id="w1-stars">&#x2606;&#x2606;&#x2606;</span></div>
+                        <div class="lock-overlay">&#x1F512;</div>
+                    </div>
+                    <div class="map-connector"></div>
+                    <div class="map-node locked" id="world-2" onclick="enterWorld(2)">
+                        <div class="node-icon">&#x1F3D4;&#xFE0F;</div>
+                        <div class="node-label">ภูเขาคูณหาร</div>
+                        <div class="node-stars"><span id="w2-stars">&#x2606;&#x2606;&#x2606;</span></div>
+                        <div class="lock-overlay">&#x1F512;</div>
+                    </div>
+                    <div class="map-connector"></div>
+                    <div class="map-node locked" id="world-3" onclick="enterWorld(3)">
+                        <div class="node-icon">&#x1F30A;</div>
+                        <div class="node-label">ทะเลเศษส่วน</div>
+                        <div class="node-stars"><span id="w3-stars">&#x2606;&#x2606;&#x2606;</span></div>
+                        <div class="lock-overlay">&#x1F512;</div>
+                    </div>
+                    <div class="map-connector"></div>
+                    <div class="map-node locked" id="world-4" onclick="enterWorld(4)">
+                        <div class="node-icon">&#x1F30C;</div>
+                        <div class="node-label">อวกาศตัวเลข</div>
+                        <div class="node-stars"><span id="w4-stars">&#x2606;&#x2606;&#x2606;</span></div>
+                        <div class="lock-overlay">&#x1F512;</div>
+                    </div>
+                    <div class="map-connector"></div>
+                    <div class="map-node locked" id="world-5" onclick="enterWorld(5)">
+                        <div class="node-icon">&#x1F3F0;</div>
+                        <div class="node-label">ปราสาทโจทย์ปัญหา</div>
+                        <div class="node-stars"><span id="w5-stars">&#x2606;&#x2606;&#x2606;</span></div>
+                        <div class="lock-overlay">&#x1F512;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- หน้าจอเล่นเกม -->
+        <div id="game-screen" class="screen">
+            <div id="game-scene">
+                <div id="scene-bg" class="scene-forest"></div>
+                <div class="game-hud">
+                    <div class="hud-left">
+                        <div class="hearts" id="hearts">
+                            <span class="heart">&#x2764;&#xFE0F;</span>
+                            <span class="heart">&#x2764;&#xFE0F;</span>
+                            <span class="heart">&#x2764;&#xFE0F;</span>
+                        </div>
+                        <div class="streak-counter" id="streak-display">
+                            &#x1F525; <span id="streak-count">0</span>
+                        </div>
+                    </div>
+                    <div class="hud-center">
+                        <div class="level-info">
+                            <span id="world-name">ป่าบวกลบ</span>
+                            <span id="question-progress">ข้อ 1/10</span>
+                        </div>
+                    </div>
+                    <div class="hud-right">
+                        <div class="score-display">&#x2B50; <span id="game-score">0</span></div>
+                        <div class="hint-btn" id="hint-button" onclick="useHint()">&#x1F4A1; คำใบ้ (<span id="hints-left">0</span>)</div>
+                    </div>
+                </div>
+
+                <!-- ศัตรู -->
+                <div class="enemy-area">
+                    <div id="enemy-sprite" class="enemy">
+                        <div class="enemy-body" id="enemy-body">&#x1F47E;</div>
+                        <div class="enemy-hp-bar">
+                            <div class="enemy-hp-fill" id="enemy-hp"></div>
+                        </div>
+                        <div class="enemy-name" id="enemy-name">สไลม์ตัวเลข</div>
+                    </div>
+                </div>
+
+                <!-- ตัวละคร -->
+                <div class="player-area">
+                    <div id="player-sprite" class="player">
+                        <div class="player-body" id="player-body">&#x1F9D1;&#x200D;&#x1F3A4;</div>
+                    </div>
+                </div>
+
+                <!-- โจทย์คณิตศาสตร์ -->
+                <div class="question-area">
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="timer-fill"></div>
+                    </div>
+                    <div class="question-box" id="question-box">
+                        <div class="question-text" id="question-text">12 + 8 = ?</div>
+                    </div>
+                    <div class="answers-grid" id="answers-grid">
+                        <!-- ตัวเลือกจะถูกสร้างด้วย JS -->
+                    </div>
+                </div>
+
+                <!-- เอฟเฟกต์ -->
+                <div id="effect-overlay" class="effect-overlay hidden">
+                    <div id="effect-text" class="effect-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ผ่านด่าน -->
+        <div id="victory-screen" class="screen">
+            <div class="panel victory-panel">
+                <h2 id="victory-title">&#x1F389; ผ่านด่านสำเร็จ!</h2>
+                <div class="victory-stars" id="victory-stars">
+                    <span class="big-star">&#x2B50;</span>
+                    <span class="big-star">&#x2B50;</span>
+                    <span class="big-star">&#x2B50;</span>
+                </div>
+                <div class="victory-stats">
+                    <div class="v-stat">
+                        <span class="v-stat-label">คะแนน</span>
+                        <span class="v-stat-value" id="v-score">0</span>
+                    </div>
+                    <div class="v-stat">
+                        <span class="v-stat-label">ตอบถูก</span>
+                        <span class="v-stat-value" id="v-correct">0/10</span>
+                    </div>
+                    <div class="v-stat">
+                        <span class="v-stat-label">ตอบถูกติดต่อกันสูงสุด</span>
+                        <span class="v-stat-value" id="v-streak">0</span>
+                    </div>
+                    <div class="v-stat">
+                        <span class="v-stat-label">เวลาเฉลี่ย</span>
+                        <span class="v-stat-value" id="v-time">0 วินาที</span>
+                    </div>
+                </div>
+                <div class="victory-buttons">
+                    <button class="btn btn-primary" onclick="nextWorld()">&#x27A1;&#xFE0F; ด่านถัดไป</button>
+                    <button class="btn btn-secondary" onclick="retryWorld()">&#x1F504; เล่นอีกครั้ง</button>
+                    <button class="btn btn-secondary" onclick="showScreen('map-screen'); updateMap();">&#x1F5FA;&#xFE0F; แผนที่</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over -->
+        <div id="gameover-screen" class="screen">
+            <div class="panel gameover-panel">
+                <h2>&#x1F4A5; หมดพลังชีวิต!</h2>
+                <div class="gameover-character">&#x1F635;</div>
+                <p class="gameover-msg">อย่าเพิ่งท้อ! ลองอีกครั้งนะ!</p>
+                <div class="gameover-stats">
+                    <p>คะแนนที่ได้: <strong id="go-score">0</strong></p>
+                    <p>ตอบถูก: <strong id="go-correct">0</strong> ข้อ</p>
+                </div>
+                <div class="victory-buttons">
+                    <button class="btn btn-primary" onclick="retryWorld()">&#x1F504; ลองอีกครั้ง</button>
+                    <button class="btn btn-secondary" onclick="showScreen('map-screen'); updateMap();">&#x1F5FA;&#xFE0F; แผนที่</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- คะแนนสูงสุด -->
+        <div id="scores-screen" class="screen">
+            <div class="panel">
+                <h2>&#x1F3C6; คะแนนสูงสุด</h2>
+                <div class="scores-list" id="scores-list">
+                    <p>ยังไม่มีคะแนน</p>
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('start-screen')">&#x2B05;&#xFE0F; กลับ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
