@@ -1,12 +1,13 @@
 // ===== FIREBASE CONFIG =====
 const firebaseConfig = {
-    apiKey: "AIzaSyDUMMY_PLACEHOLDER",
-    authDomain: "math-adventure-game-db.firebaseapp.com",
-    databaseURL: "https://math-adventure-game-db-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "math-adventure-game-db",
-    storageBucket: "math-adventure-game-db.appspot.com",
-    messagingSenderId: "000000000000",
-    appId: "1:000000000000:web:placeholder"
+    apiKey: "AIzaSyBMTDJjJIncXHvDNGm3LoFsxEuEVgPNmfA",
+    authDomain: "math-adventure-game-64889.firebaseapp.com",
+    databaseURL: "https://math-adventure-game-64889-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "math-adventure-game-64889",
+    storageBucket: "math-adventure-game-64889.firebasestorage.app",
+    messagingSenderId: "1014244407246",
+    appId: "1:1014244407246:web:828f1cecfd93ee609e5d9f",
+    measurementId: "G-6XV4PBF9T6"
 };
 
 let db = null;
